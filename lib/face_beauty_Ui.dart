@@ -12,11 +12,9 @@ class _FaceBeautyUiState extends State<FaceBeautyUi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[CustomHeader()],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[CustomHeader()],
       ),
     );
   }

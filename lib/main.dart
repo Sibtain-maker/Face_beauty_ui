@@ -1,4 +1,6 @@
-import 'package:face_beauty_ui/face_beauty_Ui.dart';
+import 'package:face_beauty_ui/container.dart';
+import 'package:face_beauty_ui/custoum_header.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,6 +12,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: FaceBeautyUi(), debugShowCheckedModeBanner: false);
+    return MaterialApp(
+      home: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [CustomHeader(), SizedBox(height: 20), Containerpic()],
+        ),
+      ),
+    );
   }
 }

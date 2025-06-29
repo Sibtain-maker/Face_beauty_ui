@@ -1,5 +1,7 @@
-import 'package:face_beauty_ui/container.dart';
+import 'dart:math';
+
 import 'package:face_beauty_ui/custoum_header.dart';
+import 'package:face_beauty_ui/picture_container.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [CustomHeader(), SizedBox(height: 20), Containerpic()],
+          children: [CustomHeader(), SizedBox(height: 20), PictureContainer()],
         ),
       ),
     );

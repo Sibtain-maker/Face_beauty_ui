@@ -1,7 +1,4 @@
-import 'dart:math';
-
-import 'package:face_beauty_ui/custoum_header.dart';
-import 'package:face_beauty_ui/picture_container.dart';
+import 'package:face_beauty_ui/grid_view.dart';
 
 import 'package:flutter/material.dart';
 
@@ -14,13 +11,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [CustomHeader(), SizedBox(height: 20), PictureContainer()],
-        ),
-      ),
-    );
+    return MaterialApp(home: ProductGridScreen());
   }
 }

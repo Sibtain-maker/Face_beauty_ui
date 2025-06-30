@@ -51,16 +51,35 @@ class ProductGridScreen extends StatelessWidget {
       rating: 4.7,
       store: 'Beauty Shop',
     ),
+    Product(
+      name: 'Face Wash',
+      imageUrl: 'assets/images/facewash.jpg',
+
+      price: 29.99,
+      rating: 4.9,
+      store: 'Fauget Store',
+    ),
+    Product(
+      name: 'Perfume',
+      imageUrl: 'assets/images/perfums.jpg',
+
+      price: 29.99,
+      rating: 4.9,
+      store: 'Fauget Store',
+    ),
+    Product(
+      name: 'Body Spray',
+      imageUrl: 'assets/images/spray.jpg',
+
+      price: 29.99,
+      rating: 4.9,
+      store: 'Fauget Store',
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9F9),
-      appBar: AppBar(
-        title: const Text('Beauty Products'),
-        backgroundColor: Colors.pinkAccent,
-      ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: GridView.builder(

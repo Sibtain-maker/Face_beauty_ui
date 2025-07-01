@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+// Product Model
 class Product {
   final String name;
   final String imageUrl;
   final double price;
   final double rating;
   final String store;
+  final String category;
 
   Product({
     required this.name,
@@ -13,36 +15,54 @@ class Product {
     required this.price,
     required this.rating,
     required this.store,
+    required this.category,
   });
 }
 
-class ProductGridScreen extends StatelessWidget {
-  ProductGridScreen({super.key});
+// Main Grid Screen
+class ProductGridScreen extends StatefulWidget {
+  const ProductGridScreen({super.key});
 
-  final List<Product> products = [
+  @override
+  State<ProductGridScreen> createState() => _ProductGridScreenState();
+}
+
+class _ProductGridScreenState extends State<ProductGridScreen> {
+  String selectedCategory = 'All';
+
+  final List<String> categories = [
+    'All',
+    'Face',
+    'Hair',
+    'Body',
+    'Skin',
+    'Nail',
+  ];
+
+  final List<Product> allProducts = [
     Product(
       name: 'Sun Screen',
-      imageUrl: 'assets/images/Bodywash.jpg',
-
+      imageUrl: 'assets/images/Bobywash.jpg',
       price: 29.99,
       rating: 4.9,
       store: 'Fauget Store',
+      category: 'Face',
     ),
     Product(
       name: 'Moisturizer',
       imageUrl: 'assets/images/Mosturizer.jpg',
-
       price: 29.99,
       rating: 4.9,
       store: 'Fauget Store',
+      category: 'Skin',
     ),
     Product(
       name: 'Serum',
       imageUrl: 'assets/images/Serum.jpg',
-
       price: 19.99,
       rating: 4.8,
       store: 'Glow Store',
+      category: 'Face',
     ),
     Product(
       name: 'Cleanser',
@@ -50,54 +70,104 @@ class ProductGridScreen extends StatelessWidget {
       price: 24.99,
       rating: 4.7,
       store: 'Beauty Shop',
+      category: 'Hair',
     ),
     Product(
       name: 'Face Wash',
       imageUrl: 'assets/images/facewash.jpg',
-
       price: 29.99,
       rating: 4.9,
       store: 'Fauget Store',
+      category: 'Face',
     ),
     Product(
       name: 'Perfume',
       imageUrl: 'assets/images/perfums.jpg',
-
       price: 29.99,
       rating: 4.9,
       store: 'Fauget Store',
+      category: 'Body',
     ),
     Product(
       name: 'Body Spray',
       imageUrl: 'assets/images/spray.jpg',
-
       price: 29.99,
       rating: 4.9,
       store: 'Fauget Store',
+      category: 'Body',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: GridView.builder(
-        itemCount: products.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.75,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-        ),
-        itemBuilder: (context, index) {
-          final product = products[index];
-          return ProductCard(product: product);
-        },
+    // this logic
+    List<Product> filteredProducts = selectedCategory == 'All'
+        ? allProducts
+        : allProducts
+              .where((product) => product.category == selectedCategory)
+              .toList();
+
+    return Expanded(
+      child: ListView(
+        children: [
+          const SizedBox(height: 10),
+          SizedBox(
+            height: 40,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                String category = categories[index];
+                bool isSelected = selectedCategory == category;
+
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: ChoiceChip(
+                    label: Text(category),
+                    selected: isSelected,
+                    selectedColor: const Color(0xFFFFB74D),
+                    backgroundColor: Colors.white,
+                    labelStyle: TextStyle(
+                      color: isSelected ? Colors.white : Colors.blueAccent,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    shape: StadiumBorder(
+                      side: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    onSelected: (_) {
+                      setState(() {
+                        selectedCategory = category;
+                      });
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 10),
+          GridView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: filteredProducts.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.75,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+            ),
+            itemBuilder: (context, index) {
+              return ProductCard(product: filteredProducts[index]);
+            },
+          ),
+        ],
       ),
     );
   }
 }
 
+// Product Card UI
 class ProductCard extends StatelessWidget {
   final Product product;
 
@@ -116,21 +186,13 @@ class ProductCard extends StatelessWidget {
           // Product Image
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: product.imageUrl.startsWith('http')
-                ? Image.network(
-                    product.imageUrl,
-                    height: 120,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  )
-                : Image.asset(
-                    product.imageUrl,
-                    height: 120,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+            child: Image.asset(
+              product.imageUrl,
+              height: 120,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
-
           const SizedBox(height: 8),
 
           // Product Name + Price
@@ -147,7 +209,7 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '\$ ${product.price.toStringAsFixed(2)}',
+                  '\$${product.price.toStringAsFixed(2)}',
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
               ],

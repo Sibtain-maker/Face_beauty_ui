@@ -16,7 +16,7 @@ class PictureContainer extends StatelessWidget {
               height: 175,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/orange.jpg'),
+                  image: AssetImage('assets/images/blue.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -25,7 +25,7 @@ class PictureContainer extends StatelessWidget {
             // Dark overlay
             Container(
               height: 175,
-              decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
+              decoration: BoxDecoration(color: Colors.black.withOpacity(0.1)),
             ),
 
             // Foreground text (left side)

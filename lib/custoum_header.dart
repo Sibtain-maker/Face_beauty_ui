@@ -5,14 +5,17 @@ class CustomHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      // ✅ ADDED: Prevents content from touching the notch or status bar
+    return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.only(bottom: 10), // ✅ ADDED: Spacing below
+        height: 165,
         width: double.infinity,
-        decoration: const BoxDecoration(
+
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFF8964E), Color(0xFFFCD462)],
+            colors: [
+              Color(0xFFF8964E), // Deep orange
+              Color(0xFFFCD462), // Light yellow-orange
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -22,94 +25,75 @@ class CustomHeader extends StatelessWidget {
           ),
         ),
         child: Column(
-          mainAxisSize: MainAxisSize
-              .min, // ✅ CHANGED: Prevents column from stretching too tall
           children: [
-            const SizedBox(height: 10),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 10, height: 30),
 
-            // ✅ CHANGED: Moved "Welcome Back" inside a Padding for cleaner spacing
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
+                Text(
                   'Welcome Back',
                   style: TextStyle(color: Colors.white, fontSize: 15),
                 ),
-              ),
+              ],
             ),
-
-            const SizedBox(height: 4),
-
-            // ✅ FIXED OVERFLOW: Used Expanded + TextOverflow.ellipsis + Padding
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ), // ✅ CLEAN: Avoids multiple SizedBoxes
-              child: Row(
-                children: [
-                  const Expanded(
-                    child: Text(
-                      'Mariana Napolitani',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      overflow:
-                          TextOverflow.ellipsis, // ✅ PREVENTS TEXT OVERFLOW
-                    ),
+            Row(
+              children: [
+                SizedBox(width: 10),
+                const Text(
+                  'Mariana Napolitani',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
-                  _buildIcon(Icons.shopping_bag),
-                  const SizedBox(width: 10),
-                  _buildIcon(Icons.notifications),
-                ],
-              ),
+                ),
+                SizedBox(width: 55),
+                _buildIcon(Icons.shopping_bag),
+                SizedBox(width: 10),
+                _buildIcon(Icons.notifications),
+              ],
             ),
-
-            const SizedBox(height: 10),
-
-            // ✅ CHANGED: Cleaned up Search Bar row using Expanded and Padding
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 35,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(width: 10),
+                Container(
+                  height: 35,
+                  width: 300,
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
                       ),
-                      child: Row(
-                        children: const [
-                          Icon(Icons.search, color: Colors.grey),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: TextField(
-                              decoration: InputDecoration(
-                                hintText: 'Search Here',
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(color: Colors.grey),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
-                  const SizedBox(width: 10),
-                  _buildIcon(Icons.tune),
-                ],
-              ),
+                  child: Row(
+                    children: const [
+                      Icon(Icons.search, color: Colors.grey),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Search Here',
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                _buildIcon(Icons.tune),
+              ],
             ),
           ],
         ),
@@ -118,7 +102,6 @@ class CustomHeader extends StatelessWidget {
   }
 }
 
-// 🔧 NO CHANGES here, just used in layout
 Widget _buildIcon(IconData icon) {
   return Container(
     padding: const EdgeInsets.all(10),
